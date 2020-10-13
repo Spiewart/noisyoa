@@ -3,9 +3,20 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import DetailView, RedirectView, UpdateView
+from django.views.generic import CreateView, DetailView, RedirectView, UpdateView
 
 User = get_user_model()
+
+
+class UserCreateView(LoginRequiredMixin, CreateView):
+    model = User
+    fields = ["name", "patient_id"]
+
+    def get_success_url(self):
+        return reverse("users:detail", kwargs={"username": self.request.user.username})
+
+
+user_create_view = UserCreateView.as_view()
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):
@@ -21,7 +32,7 @@ user_detail_view = UserDetailView.as_view()
 class UserUpdateView(LoginRequiredMixin, UpdateView):
 
     model = User
-    fields = ["name"]
+    fields = ["name", "patient_id"]
 
     def get_success_url(self):
         return reverse("users:detail", kwargs={"username": self.request.user.username})

@@ -1,4 +1,6 @@
+# from django.conf import settings
 from django.contrib.auth import forms, get_user_model
+from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
@@ -18,6 +20,10 @@ class UserCreationForm(forms.UserCreationForm):
 
     class Meta(forms.UserCreationForm.Meta):
         model = User
+        fields = UserCreationForm.Meta.fields + (
+            "name",
+            "patient_id",
+        )
 
     def clean_username(self):
         username = self.cleaned_data["username"]

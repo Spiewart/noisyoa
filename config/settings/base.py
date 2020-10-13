@@ -23,7 +23,7 @@ DEBUG = env.bool("DJANGO_DEBUG", False)
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # though not all of them may be available with every OS.
 # In Windows, this must be set to your system time zone.
-TIME_ZONE = "central"
+TIME_ZONE = "America/Chicago"
 # https://docs.djangoproject.com/en/dev/ref/settings/#language-code
 LANGUAGE_CODE = "en-us"
 # https://docs.djangoproject.com/en/dev/ref/settings/#site-id
@@ -42,7 +42,9 @@ LOCALE_PATHS = [str(ROOT_DIR / "locale")]
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 DATABASES = {
-    "default": env.db("DATABASE_URL", default="postgres://localhost/noisyoa")
+    "default": env.db(
+        "DATABASE_URL", default="postgres://postgres:n9xeftwk@127.0.0.1:5432/noisyoa"
+    ),
 }
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
@@ -76,6 +78,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "noisyoa.users.apps.UsersConfig",
     # Your stuff: custom apps go here
+    "noisyoa.koos.apps.KoosConfig",
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
